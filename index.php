@@ -1,8 +1,7 @@
-<?php 
-	include("cabecalho.php");
-	include("rodape.php");
+<?php
+	session_start();
 ?>
-<html lang="pt-br">
+<html>
 	<head>
 		<title>Estacionamento Rufino</title>
 		<meta charset="utf-8">		
@@ -11,26 +10,74 @@
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 	</head>
-	<body>
-		<div class="navbar navbar-inverse navbar-fixed-top"> 
-			<div class="container">
+
+    <body>
+        <form method="POST" action="" id="Login" name="Login">		
+			<nav class="navbar navbar-inverse">
+			  <div class="container">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="index.php">[ Desktop ]</a>	
+				  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand" href="#">Rufino Estacionamentos</a>
 				</div>
-				<div>
-					<ul class="nav navbar-nav">
-						<li>
-							<a href="form-insert.php">|| REGISTRO DE CLIENTE ||</a>
-						</li>
-					</ul>
+				<div class="collapse navbar-collapse" id="myNavbar">
+				  <ul class="nav navbar-nav navbar-right">
+					<li><a href="Cadastro.php"><span class="glyphicon glyphicon-exclamation-sign"></span> Cadastre-se</a></li>
+				  </ul>
 				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="principal">
+			  </div>
+			</nav>
 			
+			<div class="container-fluid">
+				<div class="row">					
+					<div class="col-sm-12 text-center">
+						<div id="login">
+							<div class="text-center img-responsive">
+								<img src="">  
+							</div>
+							<label>
+							E-mail:
+							<input class="lead form-control" type="mail" name="email" required>
+							</label>
+							<br>
+							<label>
+							Senha:
+							<input class="lead form-control" type="password" name="senha" required>
+							</label>
+							<br>
+							<br> 
+							<input type="submit" class="but btn-success btn btn-lg" name ="logar" value="Entrar" >
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<?php echo "<center>"."Developed by Rufinozero®"; ?>
-	</body>
+		</form>
+		
+		<?php
+			
+			$_SESSION{"LGN"} = "";
+			include("Classe_Login.php");
+			
+			if(isset($_POST["logar"]))
+			{
+				$objLogin = new Login();
+				
+				$objLogin->usrLogin = $_POST["email"];
+				$objLogin->cliEmail = $_POST["email"];
+				$objLogin->pwdLogin = $_POST["senha"];
+				$objLogin->cliSenha = $_POST["senha"];
+				
+				$objLogin->Login();
+				
+				if($objLogin->status == true)
+				{
+					$_SESSION{"LGN"} = true;
+					header('location: Desktop.php');
+				}
+			}
+        ?>
+    </body>
 </html>

@@ -5,7 +5,7 @@
 		public $dtnasc;
 		public $nome;
 		public $cpf;
-		public $cpnj;
+		public $cnpj;
 		public $sexo;
 		public $telefone;
 		public $tipo_cliente;
@@ -23,12 +23,12 @@
 		public function __construct()
 		{
 			//atributos e métodos que irão se realizar quando a classe for instanciada
-			include("ClasseConexao.php");
+			include("Classe_Conexao.php");
 			$this->idcliente="";
 			$this->dtnasc="";
 			$this->nome="";
 			$this->cpf="";
-			$this->cpnj="";
+			$this->cnpj="";
 			$this->sexo="";
 			$this->telefone="";
 			$this->tipo_cliente="";
@@ -50,6 +50,15 @@
 			//instanciação de outras classes, sendo uma base. A BLL e essa classe(Classe_Cliente), e ela trabalha tudo envolvo em lóogica de CRUD(Create,Retrieve,Update,Delete)
 			//ou afins, e ela necessita da DAL e da DTO(Não estamos utilizando DTO nesse sistema). Por último, a UI, ela é página em que trabalhamos, 
 			//a única camada que o usuário urá interagir, e ela necessita da BLL e da DTO, sendo a BLL usando a DAL.
+			if($this->cpf != "" || $this->cpf != null)
+			{
+				$this->tipo_cliente = 1;
+			}
+			else if($this->cnpj != "" || $this->cnpj != null)
+			{
+				$this->tipo_cliente = 2;
+			}
+			
 			$objConexao = new Conexao();
 			$sql = "insert into dCliente values
 					(
@@ -57,7 +66,7 @@
 						'".$this->dtnasc."', 
 						'".$this->nome."', 
 						'".$this->cpf."',
-						'".$this->cpnj."',
+						'".$this->cnpj."',
 						'".$this->sexo."',
 						'".$this->telefone"',
 						'".$this->tipo_cliente"',
@@ -68,8 +77,8 @@
 						'".$this->bairro"',
 						'".$this->cidade"',
 						'".$this->estado"',
-						'".$this->cep"'
-						'".$this->status"'
+						'".$this->cep"',
+						true
 					)";
 			//Verificação se a variável de inserção retornará true do Banco de Dados
 			if ($objConexao->conexao->query($sql) === TRUE) 
@@ -99,7 +108,7 @@
 			$this->dtnasc = $DataTableP["dtnasc"];
 			$this->nome = $DataTableP["nome"];
 			$this->cpf = $DataTableP["cpf"];
-			$this->cpnj = $DataTableP["cpnj"];
+			$this->cnpj = $DataTableP["cnpj"];
 			$this->sexo = $DataTableP["sexo"];
 			$this->telefone = $DataTableP["telefone"];
 			$this->tipo_cliente = $DataTableP["tipo_cliente"];
@@ -122,7 +131,7 @@
 			dtnasc='".$this->dtnasc."',
 			nome='".$this->nome."',
 			cpf='".$this->cpf."',
-			cpnj='".$this->cpnj."',
+			cnpj='".$this->cnpj."',
 			sexo='".$this->sexo."',
 			telefone='".$this->telefone."',
 			tipo_cliente='".$this->tipo_cliente."',

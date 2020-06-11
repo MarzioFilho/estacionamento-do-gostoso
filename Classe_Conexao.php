@@ -20,7 +20,7 @@
 			$this->servidor = "localhost";
 			$this->usuario = "root";
 			$this->senha = "";
-			$this->NomeBanco = "feedrie";
+			$this->NomeBanco = "estacionamento";
 			$this->conexao = mysqli_connect($this->servidor, $this->usuario, $this->senha, $this->NomeBanco);
 			//Verifica se a variável conexão retornou true para o processamento
 			if(!$this->conexao)
